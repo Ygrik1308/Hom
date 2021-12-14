@@ -1,0 +1,220 @@
+#ifndef _UTILS_H
+#define _UTILS_H
+
+
+
+#if defined (__AVR_ATmega2560__)
+#define GPIOA    _SFR_IO8(0X01)     //DDR
+#define GPIOB    _SFR_IO8(0x04)     //DDR
+#define GPIOC    _SFR_IO8(0x07)     //DDR
+#define GPIOD    _SFR_IO8(0x0A)     //DDR
+#define GPIOD    _SFR_IO8(0x0A)     //DDR
+#define GPIOE    _SFR_IO8(0x0D)     //DDR
+#define GPIOF    _SFR_IO8(0x10)     //DDR
+#define GPIOG    _SFR_IO8(0x13)     //DDR
+#define GPIOK    _SFR_MEM8(0x107)   //DDR
+#define GPIOL    _SFR_MEM8(0x10A)   //DDR
+#define GPIOJ    _SFR_MEM8(0x104)   //DDR
+#define GPIOH    _SFR_MEM8(0x101)   //DDR
+
+
+
+#define PINN_HIGH( register, bit ) register |= (1<<bit)
+#define PINN_LOW( register, bit ) register &= ~(1<<bit)
+
+
+//////////////////////////////////////////////////////////////////////////PIN
+void PIN_HIGH(uint8_t volatile  *pReg,uint8_t PIN) //volatile -
+{
+      *(pReg-1)&= ~(1<<PIN);  //                
+      *(pReg-1)|=  (1<<PIN) ;
+      
+  // *((pReg-1))&= ~~(1<<PIN);  //
+}
+
+void PIN_LOW(uint8_t volatile  *pReg,uint8_t PIN) //volatile  +
+{
+      *(pReg-1)&= ~(0<<PIN);  //                
+      *(pReg-1)|=  (0<<PIN) ;
+}
+
+void PIN_IN(uint8_t volatile  *pReg,uint8_t PIN) //volatile  +
+{
+    *(pReg) &= ~(1<<PIN);  //
+}
+
+void PIN_OUT(uint8_t volatile  *pReg,uint8_t PIN) //volatile  +
+{
+    *(pReg) |= (1<<PIN);  //
+}
+
+//////////////////////////////////////////////////////////////////////////PORT
+void PORT_OUT(uint8_t volatile  *pReg) //volatile 
+{
+    *(pReg) = 0xFF;  //
+}
+
+void PORT_IN(uint8_t volatile  *pReg) //volatile
+{
+    *(pReg) = 0x00;  //
+}
+
+void PORT_HIGH(uint8_t volatile  *pReg) //volatile
+{
+    *(pReg-1) = 0xFF;  //
+}
+void PORT_LOW(uint8_t volatile  *pReg) //volatile
+{
+    *(pReg-1) = 0x00;  //
+}
+
+void PORT_DATA(uint8_t volatile  *pReg,uint8_t data) //volatile 
+{
+    *(pReg) = data;  //
+}
+
+void fail_signal(uint8_t volatile  *pReg,uint16_t LED)
+{
+          PIN_HIGH (LED); //--  
+         _delay_ms( 100 );
+
+         PIN_LOW  (LED); //--
+         _delay_ms( 100 );
+}
+
+
+typedef struct
+{
+    uint32_t DDR;    /*!< GPIO port mode register,               Address offset: 0x00      */
+    uint32_t PORT;   /*!< GPIO port output type register,        Address offset: 0x04      *///_IO
+    uint32_t PIN;    /*!< GPIO port output speed register,         Address offset: 0x08      */
+} GPIO_TypeDef;
+
+
+
+#define PINA     _SFR_IO8(0X00) //PIN
+#define PORTA    _SFR_IO8(0X02) //PORT
+#define PINB     _SFR_IO8(0X03) //PIN
+#define PORTB    _SFR_IO8(0x05) //PORT
+
+
+/*/
+#define GPIOA_BASE          (_SFR_IO8(0x2A)
+#define GPIOB_BASE          (_SFR_IO8(0x04))
+#define GPIOC_BASE          (_SFR_IO8(0x07))
+#define GPIOD_BASE          (_SFR_IO8(0x0A))
+#define GPIOE_BASE          (_SFR_IO8(0x0D))
+#define GPIOF_BASE          (_SFR_IO8(0x10))
+#define GPIOG_BASE          (_SFR_IO8(0x13))
+#define GPIOH_BASE          (_SFR_MEM8(0x101))
+#define GPIOI_BASE          (_SFR_MEM8(0x104))
+
+
+#define GPIOA               ((GPIO_TypeDef *) GPIOA_BASE)
+#define GPIOB               ((GPIO_TypeDef *) GPIOB_BASE)
+#define GPIOC               ((GPIO_TypeDef *) GPIOC_BASE)
+#define GPIOD               ((GPIO_TypeDef *) GPIOD_BASE)
+#define GPIOE               ((GPIO_TypeDef *) GPIOE_BASE)
+#define GPIOF               ((GPIO_TypeDef *) GPIOF_BASE)
+#define GPIOG               ((GPIO_TypeDef *) GPIOG_BASE)
+#define GPIOH               ((GPIO_TypeDef *) GPIOH_BASE)
+#define GPIOI               ((GPIO_TypeDef *) GPIOI_BASE)
+
+*/
+
+template <typename T>
+constexpr T reverse( T data ) 
+{
+    T reversed_data = 0x00;
+    for( uint8_t i=0; i<sizeof(T)*8; ++i )
+    {
+        reversed_data <<= 1;
+        reversed_data |= data & 1;
+        data >>= 1;
+    }
+    return reversed_data;
+}
+/*
+////////////////////////////////////////////////////////////////////////// set_bit PORT, bit=1 !!
+template <typename D, typename T>                      \
+constexpr void PIN_OUT( D& ddr, T bit )              \
+{                                                      \
+     port |= ( 1 << bit );                              \
+}                                                \
+
+////////////////////////////////////////////////////////////////////////// set_bit PORT, bit=1 !!
+template <typename P, typename T>                      \ 
+constexpr void PIN_HIGH( P& port, T bit )              \
+{                                                      \                                           
+    port |= ( 1 << bit );                              \
+}                                                      \   
+
+
+//////////////////////////////////////////////////////////////////////////  clear_bit PORT, bit=0 !!
+template <typename P, typename T>                     \
+constexpr void PIN_LOW( P& port, T bit )              \
+{                                                     \
+    port &= ~( 1 << bit );                            \
+}                                                     \
+*/
+//////////////////////////////////////////////////////////////////////////toggle_bits edited
+template <typename P, typename T>                       \
+constexpr void toggle_bits( P& port, T bit )            \
+{                                                       \
+    port ^= ( 1 << bit );                               \
+}                                                       \
+//////////////////////////////////////////////////////////////////////////&&&
+//template <typename P, typename T>                       
+
+//#define pin_OUT( register, ...)                          
+//#define set_bits(port,t,...)                            \          
+//{                                                        \
+ //   port |=  (1 << t);
+//
+//}                                                        \
+//////////////////////////////////////////////////////////////////////////SET_BITS  DDR=1-> OUT
+#define PINS_OUT( register, ...)                        \  
+{                                                       \
+    uint8_t mask_bits[] = { __VA_ARGS__ };              \
+    uint8_t mask = 0x00;                                \
+    for( auto& bit : mask_bits ) mask |= (1<<bit);      \
+    register |= mask;                                   \
+}
+//////////////////////////////////////////////////////////////////////////CLEAR_BITS  DDR=0-> IN
+#define PINS_IN( register, ... )                        \
+{                                                       \
+    uint8_t mask_bits[] = { __VA_ARGS__ };              \
+    uint8_t mask = 0x00;                                \
+    for( auto& bit : mask_bits ) mask |= (1<<bit);      \
+    register &= ~mask;                                  \
+}
+
+
+
+
+
+
+template <typename P, typename T>
+class Pin 
+{
+    public:
+    P* const t_port;
+    const T  pin;
+    Pin( P& port, T pin_num ) : t_port( &port ), pin( pin_num ) {}
+    void set() { set_bit( *t_port, pin ); }                              //set_bit
+    void clear() { clear_bit( *t_port, pin ); }
+    void toggle() { toggle_bit( *t_port, pin ); }
+    bool is_low() const { return ( ( *( t_port - 2 ) ) & ( 1 << pin ) ) == 0; }
+    bool is_high() const { return ( ( *( t_port - 2 ) ) & ( 1 << pin ) ) != 0; }
+    operator T() { return pin; }
+};
+
+auto set    = []( auto& p ) { p.set(); };
+
+//#define READ( pin_name )    ( ( ( *( pin_name.t_port - 2 ) ) & ( 1 << pin_name.pin ) ) >> pin_name.pin ) 
+
+/*    
+            
+*/                                             \ 
+#endif
+#endif  //__AVR_ATmega2560_

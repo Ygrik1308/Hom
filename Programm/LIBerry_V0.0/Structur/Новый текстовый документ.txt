@@ -1,0 +1,40 @@
+#define Data_number    8
+#define Address_number 16
+
+typedef struct
+{
+	GPIO  nCE1;      n0E1 98
+	GPIO  CE2;        0E2  97
+	GPIO  nCE3;      OE3  92
+	GPIO  nGW;       nGW  88
+	GPIO  nOE;        nOE  86
+	GPIO  CLK;       CLK  89
+
+  GPIO DDQSA [8];
+  GPIO DDQPA;
+
+  GPIO DDQSB [8];
+  GPIO DDQPB;
+
+  GPIO DDQSC [8];
+  GPIO DDQPC;
+
+  GPIO DDQSD [8];
+  GPIO DDQPD;
+
+  GPIO Address[16];
+  GPIO A0;
+  GPIO A1;
+
+  GPIO LED0;
+  GPIO LED_GND;
+
+  GPIO nADSP;
+  GPIO nADSC;
+
+  GPIO ZZ;
+
+
+
+    MODE-GND
+}CY7C1381KV33;
