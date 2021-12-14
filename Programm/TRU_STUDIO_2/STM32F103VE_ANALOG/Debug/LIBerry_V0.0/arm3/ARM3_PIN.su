@@ -1,0 +1,2 @@
+ARM3_PIN.c:6:10:init_ARM3	800	static
+ARM3_PIN.c:73:6:OUT_ARM3	24	static

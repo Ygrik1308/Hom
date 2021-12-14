@@ -1,0 +1,16 @@
+lcd.c:14:6:lcd_ON	24	static
+lcd.c:38:6:lcd_ON_10	24	static
+lcd.c:104:6:sendData	24	static
+lcd.c:120:6:initLCD	24	static
+lcd.c:168:6:writeLCD	24	static
+lcd.c:180:6:writeLCD_DEC	24	static
+lcd.c:192:6:writeLCD_16_HEX	48	dynamic
+lcd.c:209:6:writeLCD_HEX	48	dynamic
+lcd.c:226:6:writeLCD_2HEX	48	dynamic
+lcd.c:242:6:lsd_print	24	static
+lcd.c:254:6:moveXY	24	static
+lcd.c:302:6:moveDisplayRight	24	static
+lcd.c:312:6:moveDisplayLeft	24	static
+lcd.c:325:6:display_clear	24	static
+lcd.c:343:6:display_ON	24	static
+lcd.c:357:6:display_OFF	24	static

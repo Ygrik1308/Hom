@@ -1,0 +1,2 @@
+adc832.c:29:6:adc832_INIT	72	static
+adc832.c:84:6:PrintHelp	8	static

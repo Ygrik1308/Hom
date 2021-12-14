@@ -1,0 +1,5 @@
+ad7780.c:74:8:ad7780_init	24	static
+ad7780.c:150:9:ad7780_remove	24	static
+ad7780.c:175:8:ad7780_wait_rdy_go_low	24	static
+ad7780.c:203:9:ad7780_read_sample	24	static
+ad7780.c:226:7:ad7780_convert_to_voltage	40	static
